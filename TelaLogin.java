@@ -1,3 +1,5 @@
+//Tela de login criada com usuário default como "admin" e senha default como "mestre"
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
