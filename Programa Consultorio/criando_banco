@@ -1,0 +1,43 @@
+Comando sql para criação do nosso banco de dados
+
+CREATE DATABASE db_consultorio;
+
+ALTER SCHEMA `db_consultorio`  DEFAULT CHARACTER SET utf8  DEFAULT COLLATE utf8_general_ci ;
+
+CREATE TABLE IF NOT EXISTS `db_consultorio`.`paciente` (
+  `idpaciente` INT(11) NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(45) NULL DEFAULT NULL,
+  `cpf` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`idpaciente`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `db_consultorio`.`medico` (
+  `idmedico` INT(11) NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(45) NULL DEFAULT NULL,
+  `crm` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`idmedico`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `db_consultorio`.`consulta` (
+  `idconsulta` INT(11) NOT NULL AUTO_INCREMENT,
+  `data` DATE NULL DEFAULT NULL,
+  `hora` TIME NULL DEFAULT NULL,
+  `paciente_idpaciente` INT(11) NOT NULL,
+  `medico_idmedico` INT(11) NOT NULL,
+  INDEX `fk_paciente_has_medico_medico1_idx` (`medico_idmedico` ASC) VISIBLE,
+  INDEX `fk_paciente_has_medico_paciente_idx` (`paciente_idpaciente` ASC) VISIBLE,
+  PRIMARY KEY (`idconsulta`),
+  CONSTRAINT `fk_paciente_has_medico_paciente`
+    FOREIGN KEY (`paciente_idpaciente`)
+    REFERENCES `db_consultorio`.`paciente` (`idpaciente`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_paciente_has_medico_medico1`
+    FOREIGN KEY (`medico_idmedico`)
+    REFERENCES `db_consultorio`.`medico` (`idmedico`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
